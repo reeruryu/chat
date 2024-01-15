@@ -1,3 +1,4 @@
+/*
 package org.example.chat.test;
 
 import org.springframework.amqp.core.Binding;
@@ -38,3 +39,4 @@ public class SampleConfig {
         return rabbitTemplate;
     }
 }
+*/

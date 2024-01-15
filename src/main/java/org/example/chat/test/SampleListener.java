@@ -1,3 +1,4 @@
+/*
 package org.example.chat.test;
 
 import org.slf4j.Logger;
@@ -16,3 +17,4 @@ public class SampleListener {
         log.info(message.toString());
     }
 }
+*/
