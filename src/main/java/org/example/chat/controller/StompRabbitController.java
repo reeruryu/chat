@@ -3,6 +3,7 @@ package org.example.chat.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.chat.dto.ChatDto;
+import org.example.chat.service.ChatService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Slf4j
 public class StompRabbitController {
     private final RabbitTemplate template;
+    private final ChatService chatService;
 
     private final static String CHAT_EXCHANGE_NAME = "chat.exchange";
     private final static String CHAT_QUEUE_NAME = "chat.queue";
@@ -44,6 +46,7 @@ public class StompRabbitController {
     // receiver()는 단순히 큐에 들어온 메세지를 소비만 한다. (현재는 디버그 용도)
     @RabbitListener(queues = CHAT_QUEUE_NAME)
     public void receive(ChatDto chatDto) {
+        chatService.saveChatMessage(chatDto);
         System.out.println("chatting");
         log.info("chatDto.getRegDate() = {}", chatDto.getRegDate());
         log.info("chatDto.getMessage() = {}",chatDto.getMessage());
