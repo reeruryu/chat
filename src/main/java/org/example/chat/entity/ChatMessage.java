@@ -2,10 +2,9 @@ package org.example.chat.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -30,5 +29,11 @@ public class ChatMessage {
     private String content;
 
     //private LocalDateTime localDateTime;
+    @Builder
+    public ChatMessage(User user, ChatRoom chatRoom, String content) {
+        this.user = user;
+        this.chatRoom = chatRoom;
+        this.content = content;
+    }
 
 }
