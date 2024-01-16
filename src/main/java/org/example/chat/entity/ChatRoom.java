@@ -2,6 +2,7 @@ package org.example.chat.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,10 @@ public class ChatRoom {
 
     @Column(name = "room_name", length = 255)
     private String roomName;
+
+    @Builder
+    public ChatRoom(String roomName) {
+        this.roomName = roomName;
+    }
 
 }

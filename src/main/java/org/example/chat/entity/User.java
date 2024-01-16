@@ -2,6 +2,7 @@ package org.example.chat.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,13 @@ public class User {
 
     @Column(name = "user_name", length = 255)
     private String userName;
+
+    // Firebase Cloud Messaging 토큰 -> 보안
+//    private String fcmToken;
+
+    @Builder
+    public User(String userName) {
+        this.userName = userName;
+    }
 
 }

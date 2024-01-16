@@ -2,6 +2,7 @@ package org.example.chat.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +24,11 @@ public class ChatParticipation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
+
+    @Builder
+    public ChatParticipation(User user, ChatRoom chatRoom) {
+        this.user = user;
+        this.chatRoom = chatRoom;
+    }
 
 }
