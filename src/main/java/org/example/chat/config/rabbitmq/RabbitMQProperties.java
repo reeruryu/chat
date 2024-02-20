@@ -1,4 +1,4 @@
-package org.example.chat.config.properties;
+package org.example.chat.config.rabbitmq;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

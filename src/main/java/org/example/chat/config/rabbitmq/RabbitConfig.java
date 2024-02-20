@@ -1,4 +1,4 @@
-package org.example.chat.config;
+package org.example.chat.config.rabbitmq;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,19 +9,17 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.RequiredArgsConstructor;
-import org.example.chat.config.properties.RabbitMQProperties;
+import org.example.chat.config.rabbitmq.RabbitMQConstants;
+import org.example.chat.config.rabbitmq.RabbitMQProperties;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,33 +34,29 @@ public class RabbitConfig {
 
     private final RabbitMQProperties rabbitMQProperties;
 
-    private static final String CHAT_QUEUE_NAME = "chat.queue";
-    private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
-    private static final String ROUTING_KEY = "room.*";
-
     // Queue 등록
     @Bean
     public Queue queue() {
-        return new Queue(CHAT_QUEUE_NAME, true);
+        return new Queue(RabbitMQConstants.CHAT_QUEUE_NAME, true);
     }
 
     // Exchange 등록
     @Bean
     public TopicExchange exchange() {
-        return new TopicExchange(CHAT_EXCHANGE_NAME);
+        return new TopicExchange(RabbitMQConstants.CHAT_EXCHANGE_NAME);
     }
 
     // Exchange 와 Queue 바인딩
     @Bean
     public Binding binding() {
-        return BindingBuilder.bind(queue()).to(exchange()).with(ROUTING_KEY);
+        return BindingBuilder.bind(queue()).to(exchange()).with(RabbitMQConstants.ROUTING_KEY);
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        rabbitTemplate.setRoutingKey(CHAT_QUEUE_NAME);
+        rabbitTemplate.setRoutingKey(RabbitMQConstants.CHAT_QUEUE_NAME);
         return rabbitTemplate;
     }
 
