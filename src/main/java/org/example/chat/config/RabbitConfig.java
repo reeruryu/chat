@@ -8,11 +8,14 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import lombok.RequiredArgsConstructor;
+import org.example.chat.config.properties.RabbitMQProperties;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,15 +30,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableRabbit
 public class RabbitConfig {
 
-    @Value("${spring.rabbitmq.username}")
-    private String username;
-    @Value("${spring.rabbitmq.password}")
-    private String password;
-    @Value("${spring.rabbitmq.host}")
-    private String host;
+    private final RabbitMQProperties rabbitMQProperties;
 
     private static final String CHAT_QUEUE_NAME = "chat.queue";
     private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
@@ -67,22 +66,23 @@ public class RabbitConfig {
         return rabbitTemplate;
     }
 
-    @Bean
+    /*@Bean
     public SimpleMessageListenerContainer container() {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
         container.setQueueNames(CHAT_QUEUE_NAME);
+        //container.setMessageListener(null);
         return container;
-    }
+    }*/
 
     // Spring 에서 자동생성해주는 ConnectionFactory 는 SimpleConnectionFactory
     // 여기서 사용하는 건 CachingConnectionFactory 라 새로 등록해줌
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory factory = new CachingConnectionFactory();
-        factory.setHost(host);
-        factory.setUsername(username);
-        factory.setPassword(password);
+        factory.setHost(rabbitMQProperties.getHost());
+        factory.setUsername(rabbitMQProperties.getUsername());
+        factory.setPassword(rabbitMQProperties.getPassword());
         return factory;
     }
 
