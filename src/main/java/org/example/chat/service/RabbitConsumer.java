@@ -2,6 +2,7 @@ package org.example.chat.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.chat.config.rabbitmq.RabbitMQConstants;
 import org.example.chat.dto.ChatDto;
 import org.example.chat.dto.pushTmp.RequestChatMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -12,13 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RabbitConsumer {
 
-    private final static String CHAT_QUEUE_NAME = "chat.queue";
-
     private final ChatService chatService;
     private final FCMService fcmService;
 
     // receiver()는 단순히 큐에 들어온 메세지를 소비만 한다. (현재는 디버그 용도)
-    @RabbitListener(queues = CHAT_QUEUE_NAME)
+    @RabbitListener(queues = RabbitMQConstants.CHAT_QUEUE_NAME)
     public void receive(ChatDto chatDto) {
         // 1. msg 저장
         chatService.saveChatMessage(chatDto);

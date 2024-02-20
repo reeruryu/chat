@@ -1,7 +1,7 @@
 package org.example.chat.config;
 
 import lombok.RequiredArgsConstructor;
-import org.example.chat.config.properties.RabbitMQProperties;
+import org.example.chat.config.rabbitmq.RabbitMQProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.util.AntPathMatcher;
