@@ -23,10 +23,10 @@ public class RabbitConsumer {
         chatService.saveChatMessage(chatDto);
 
         // 2. push alarm
-        fcmService.sendChatMessage(
+        /*fcmService.sendChatMessage(
                 new RequestChatMessage(
                         "chatDto.chatDto.getChatRoomId(),roomName", "chatDto.getMemberId().name",
-                        chatDto.getMessage(), chatDto.getChatRoomId().toString()));
+                        chatDto.getMessage(), chatDto.getChatRoomId().toString()));*/
 
         // 3. log
         System.out.println("chatting");
