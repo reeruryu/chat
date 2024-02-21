@@ -1,3 +1,4 @@
+/*
 package org.example.chat.test;
 
 import lombok.RequiredArgsConstructor;
@@ -20,3 +21,4 @@ public class SampleController {
         return "Message sending!";
     }
 }
+*/
