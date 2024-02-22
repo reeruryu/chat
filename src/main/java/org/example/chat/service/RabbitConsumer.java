@@ -3,8 +3,7 @@ package org.example.chat.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.chat.config.rabbitmq.RabbitMQConstants;
-import org.example.chat.dto.ChatDto;
-import org.example.chat.dto.pushTmp.RequestChatMessage;
+import org.example.chat.controller.dto.ChatDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 

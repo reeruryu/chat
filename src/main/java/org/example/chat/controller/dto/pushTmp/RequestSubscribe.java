@@ -1,4 +1,4 @@
-package org.example.chat.dto.pushTmp;
+package org.example.chat.controller.dto.pushTmp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

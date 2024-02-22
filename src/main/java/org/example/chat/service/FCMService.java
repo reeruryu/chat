@@ -3,10 +3,9 @@ package org.example.chat.service;
 import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.chat.dto.pushTmp.RequestChatMessage;
-import org.example.chat.dto.pushTmp.RequestSubscribe;
-import org.example.chat.dto.pushTmp.RequestUnsubscribe;
-import org.example.chat.repository.UserRepository;
+import org.example.chat.controller.dto.pushTmp.RequestChatMessage;
+import org.example.chat.controller.dto.pushTmp.RequestSubscribe;
+import org.example.chat.controller.dto.pushTmp.RequestUnsubscribe;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

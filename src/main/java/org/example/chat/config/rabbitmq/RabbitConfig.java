@@ -81,7 +81,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter(){
+    public Jackson2JsonMessageConverter jsonMessageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
         objectMapper.registerModule(dateTimeModule());
@@ -90,7 +90,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Module dateTimeModule(){
+    public Module dateTimeModule() {
         JavaTimeModule timeModule = new JavaTimeModule();
         timeModule.addDeserializer(LocalDate.class,
                 new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));

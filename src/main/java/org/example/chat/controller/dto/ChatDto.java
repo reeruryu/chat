@@ -1,4 +1,4 @@
-package org.example.chat.dto;
+package org.example.chat.controller.dto;
 
 import lombok.*;
 
