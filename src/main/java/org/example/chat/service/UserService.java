@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.chat.common.exception.BusinessExceptionHandler;
 import org.example.chat.common.exception.ErrorCode;
 import org.example.chat.config.TokenProvider;
+import org.example.chat.controller.dto.ProfileDto;
 import org.example.chat.controller.dto.UserDto;
 import org.example.chat.controller.mapper.UserMapper;
+import org.example.chat.entity.Profile;
 import org.example.chat.entity.User;
 import org.example.chat.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,11 +23,15 @@ public class UserService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final TokenProvider tokenProvider;
 
+    private final ProfileService profileService;
+
     @Transactional
-    public void signUp(UserDto.SignUpRequest request) {
+    public Long signUp(UserDto.SignUpRequest request) {
         checkEmailExist(request.getEmail());
         request.setPassword(encode(request.getPassword()));
-        userRepository.save(UserMapper.INSTANCE.dtoToEntity(request));
+
+        User user = userRepository.save(UserMapper.INSTANCE.dtoToEntity(request));
+        return user.getId();
     }
 
     @Transactional(readOnly = true)
@@ -36,6 +42,24 @@ public class UserService {
             throw new BusinessExceptionHandler(ErrorCode.ERROR_001);
         }
         return tokenProvider.createToken(user.getId().toString(), List.of("USER"));
+    }
+
+    @Transactional
+    public void createProfile(Long userId, ProfileDto.CreateRequest request) {
+        User user = userRepository.findById(userId).
+                orElseThrow(() -> new BusinessExceptionHandler(ErrorCode.ERROR_001));
+
+        Profile profile = profileService.createProfile(user, request);
+        user.updateProfile(profile);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUser(Long userId) {
+        User user = userRepository.findById(userId).
+                orElseThrow(() -> new BusinessExceptionHandler(ErrorCode.ERROR_001));
+
+        return user;
+
     }
 
     private String encode(String password) {

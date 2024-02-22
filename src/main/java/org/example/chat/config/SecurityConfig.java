@@ -7,6 +7,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,8 +23,10 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
 
     private final String[] permitAll ={"/",
-            "/api/users/signup",
-            "/api/users/login"
+            "/**"
+//            "/api/users/signup",
+//            "/api/users/login",
+//            "/api/users/**"
     };
 
     @Bean
@@ -37,18 +41,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(c -> c.disable())
-                .httpBasic(h -> h.disable())
+        http.csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                                 .requestMatchers(permitAll).permitAll()
-                        .requestMatchers("/api/users").hasRole("USER")
+//                        .requestMatchers("/api/users").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
-                .logout((logout) -> logout.permitAll());
+                .logout(LogoutConfigurer::permitAll);
         return http.build();
     }
 }
