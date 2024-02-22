@@ -17,14 +17,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", length = 255)
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "password", length = 255, nullable = false)
+    private String password;
+
+    @Column(name = "user_name", length = 255, nullable = false)
     private String userName;
 
     // Firebase Cloud Messaging 토큰 -> 보안
 //    private String fcmToken;
 
     @Builder
-    public User(String userName) {
+    public User(String email, String password, String userName) {
+        this.email = email;
+        this.password = password;
         this.userName = userName;
     }
 
