@@ -53,15 +53,6 @@ public class UserService {
         user.updateProfile(profile);
     }
 
-    @Transactional(readOnly = true)
-    public User getUser(Long userId) {
-        User user = userRepository.findById(userId).
-                orElseThrow(() -> new BusinessExceptionHandler(ErrorCode.ERROR_001));
-
-        return user;
-
-    }
-
     private String encode(String password) {
         return bCryptPasswordEncoder.encode(password);
     }

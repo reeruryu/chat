@@ -17,13 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    /* // test api
-    @PostMapping
-    public ResponseEntity<Long> createUser(@RequestParam("name") String userName) {
-        User user = userRepository.save(User.builder().userName(userName).build());
-        return ResponseEntity.ok(user.getId());
-    }*/
-
     @PostMapping("signup")
     public ResponseEntity<Long> signUp(@Valid @RequestBody UserDto.SignUpRequest request) {
         Long userId = userService.signUp(request);
@@ -43,11 +36,5 @@ public class UserController {
         userService.createProfile(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-    /*@GetMapping
-    public ResponseEntity<String> getUser(@AuthenticationPrincipal Long userId) {
-        User user = userService.getUser(userId);
-        return ResponseEntity.ok(user.getUserName());
-    }*/
 
 }

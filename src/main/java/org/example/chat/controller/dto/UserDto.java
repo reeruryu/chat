@@ -19,11 +19,6 @@ public class UserDto {
 
         @NotBlank(message = "필수 입력입니다.")
         private String userName;
-
-        /*public static User toEntity(SignUpRequest dto) {
-            User.builder()
-                    .
-        }*/
     }
 
     @Getter

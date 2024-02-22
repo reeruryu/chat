@@ -60,15 +60,6 @@ public class RabbitConfig {
         return rabbitTemplate;
     }
 
-    /*@Bean
-    public SimpleMessageListenerContainer container() {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory());
-        container.setQueueNames(CHAT_QUEUE_NAME);
-        //container.setMessageListener(null);
-        return container;
-    }*/
-
     // Spring 에서 자동생성해주는 ConnectionFactory 는 SimpleConnectionFactory
     // 여기서 사용하는 건 CachingConnectionFactory 라 새로 등록해줌
     @Bean
