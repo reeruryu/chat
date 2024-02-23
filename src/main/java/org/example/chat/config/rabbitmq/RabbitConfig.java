@@ -60,15 +60,6 @@ public class RabbitConfig {
         return rabbitTemplate;
     }
 
-    /*@Bean
-    public SimpleMessageListenerContainer container() {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory());
-        container.setQueueNames(CHAT_QUEUE_NAME);
-        //container.setMessageListener(null);
-        return container;
-    }*/
-
     // Spring 에서 자동생성해주는 ConnectionFactory 는 SimpleConnectionFactory
     // 여기서 사용하는 건 CachingConnectionFactory 라 새로 등록해줌
     @Bean
@@ -81,7 +72,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter(){
+    public Jackson2JsonMessageConverter jsonMessageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
         objectMapper.registerModule(dateTimeModule());
@@ -90,7 +81,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Module dateTimeModule(){
+    public Module dateTimeModule() {
         JavaTimeModule timeModule = new JavaTimeModule();
         timeModule.addDeserializer(LocalDate.class,
                 new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));

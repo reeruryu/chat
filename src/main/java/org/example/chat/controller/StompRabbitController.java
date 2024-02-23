@@ -3,7 +3,7 @@ package org.example.chat.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.chat.config.rabbitmq.RabbitMQConstants;
-import org.example.chat.dto.ChatDto;
+import org.example.chat.controller.dto.ChatDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;

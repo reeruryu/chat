@@ -1,9 +1,9 @@
 package org.example.chat.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.chat.dto.pushTmp.RequestChatMessage;
-import org.example.chat.dto.pushTmp.RequestSubscribe;
-import org.example.chat.dto.pushTmp.RequestUnsubscribe;
+import org.example.chat.controller.dto.pushTmp.RequestChatMessage;
+import org.example.chat.controller.dto.pushTmp.RequestSubscribe;
+import org.example.chat.controller.dto.pushTmp.RequestUnsubscribe;
 import org.example.chat.service.FCMService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

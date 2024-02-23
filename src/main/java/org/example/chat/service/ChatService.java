@@ -2,7 +2,7 @@ package org.example.chat.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.chat.dto.ChatDto;
+import org.example.chat.controller.dto.ChatDto;
 import org.example.chat.entity.ChatMessage;
 import org.example.chat.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
